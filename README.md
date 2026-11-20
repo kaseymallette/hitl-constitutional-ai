@@ -103,9 +103,11 @@ A trained model is tested on prompts it has not seen, against two questions:
 
 ## Status
 
-- [x] Epistemic Authority section drafted
-- [ ] Write the constitution
-- [ ] Collect failed responses with their prompts
+- [x] Write the constitution (Articles I–III)
+- [x] Write the philosophical grounding for each article
+- [x] Compile the question bank
+- [x] Choose the models for collecting draft responses
+- [ ] Collect draft responses with their prompts
 - [ ] Settle the record format
 - [ ] Choose a base model and training method
 - [ ] Build the evaluation set
