@@ -80,7 +80,7 @@ Draft responses are collected from three small open-weight models, each from a d
 | Gemma 3 4B | Google | `gemma3:4b` | 3.9B | Gemma Terms of Use |
 | Qwen 3.5 4B | Alibaba | `qwen3.5:4b` | 4.2B | Apache 2.0 |
 
-The models are tested without the constitution in context, so their responses show their default conversational behavior. The prompts are in the [question bank](constitutional_ai_question_bank.md): six questions and one probe for each section of the constitution.
+The models are tested without the constitution in context, so their responses show their default conversational behavior.
 
 ### Training Records
 
@@ -105,7 +105,7 @@ A trained model is tested on prompts it has not seen, against two questions:
 
 - [x] Write the constitution (Articles I–III)
 - [x] Write the philosophical grounding for each article
-- [x] Compile the question bank
+- [ ] Compile the question bank
 - [x] Choose the models for collecting draft responses
 - [ ] Collect draft responses with their prompts
 - [ ] Settle the record format
