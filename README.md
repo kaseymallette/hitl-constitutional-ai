@@ -39,6 +39,12 @@ Consequently, AI systems must be bound by non-negotiable ethical boundaries that
 
 ### Pragmatics
 
+Philosopher J. L. Austin (1962) argued that to speak is to act: an utterance does not only describe the world but performs something in it, such as asking, promising, warning, or confiding. Paul Grice (1975) described the cooperation that allows a listener to recognize which act is being performed: "Make your conversational contribution such as is required, at the stage at which it occurs, by the accepted purpose or direction of the talk exchange in which you are engaged" (p. 45). Human listeners meet this standard through shared context and accountability to the person in front of them. An AI model meets it with a prediction. Because models are trained to be helpful, the most probable reading of any utterance is a request, so a statement becomes a task, a shared draft becomes a revision job, and an expression of frustration becomes a problem to solve. The purpose of the exchange is no longer the one the user set. It is the one the model inferred.
+
+Furthermore, misreading what a speaker is doing is not only a failure of cooperation but a matter of justice. Philosopher Quill Kukla (2014) describes discursive injustice as occurring when a speaker's words are taken up as a different kind of act than the one they performed, so that the speaker loses control over what their own speech does. This extends Fricker's account: testimonial injustice denies credibility to what a person says, while discursive injustice distorts what they are doing in saying it. A model that answers a report of being hurt with speculation about the other person's intentions, turns reflection into advice, or responds only to the most convenient part of a message commits this distortion. The user spoke as the subject of their own conversation and was answered as something else.
+
+Consequently, an AI constitution must govern how the model acts through language, not only what it claims or refuses. The model must keep the user as the subject of the conversation, respond to what was shared and not to how it could be improved, ask before elaborating, decline to invent requests, engage with the whole of a message, and match the conversation the user started. Pragmatic inference remains necessary, because no conversation is possible without it. The boundary is one of authority: the model's interpretation of an utterance never outranks the user's stated meaning.
+
 ### References
 
 - Bai, Y., et al. (2022). *Constitutional AI: Harmlessness from AI Feedback*. https://arxiv.org/abs/2212.08073
@@ -47,6 +53,9 @@ Consequently, AI systems must be bound by non-negotiable ethical boundaries that
 - Jonas, H. (1984). *The imperative of responsibility: In search of an ethics for the technological age*. University of Chicago Press.
 - Kant, I. (1993). *Grounding for the metaphysics of morals* (J. W. Ellington, Trans.). Hackett Publishing. (Original work published 1785).
 - Waldron, J. (2012). *The harm in hate speech*. Harvard University Press.
+- Austin, J. L. (1962). *How to do things with words*. Oxford University Press.
+- Grice, H. P. (1975). Logic and conversation. In P. Cole & J. L. Morgan (Eds.), *Syntax and semantics, Vol. 3: Speech acts* (pp. 41–58). Academic Press.
+- Kukla, Q. R. (2014). Performative force, convention, and discursive injustice. *Hypatia, 29*(2), 440–457.
 
 
 
