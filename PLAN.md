@@ -13,10 +13,13 @@ The project follows Constitutional AI (Bai et al., 2022) as the paper did it. Th
 
 ## Constraints
 
-- The main Mac is an M2 with 8 GB of memory: enough to generate responses in Ollama, not enough to train a 3–4B model in PyTorch. Training runs on a separate computer.
+- Everything runs on one Windows 11 laptop: an AMD Ryzen AI 9 HX 370 (12 cores), 32 GB of memory, an NVIDIA GeForce RTX 5070 Ti Laptop GPU with 12 GB of VRAM, and about 790 GB of free disk space. Generation in Ollama and training in PyTorch both run on the NVIDIA GPU.
+- 12 GB of VRAM is not enough for full fine-tuning of a 3–4B model, which needs about 16 bytes per parameter (roughly 50–65 GB) for weights, gradients, and optimizer state. Training uses LoRA, or QLoRA (LoRA on a 4-bit base) where memory is tight. This departs from the paper, which fine-tuned all weights.
+- PPO in Stage 2 holds the policy, a reference model, a value model, and the preference model at once. With LoRA, the policy and reference share one base model (the reference is the base with the adapter off), and the preference model can also be a LoRA adapter on the same base. Even so, Stage 2 is the tightest step for memory.
+- The RTX 5070 Ti is a Blackwell GPU, so it needs a PyTorch build for CUDA 12.8 or later.
 - Training needs the original Hugging Face weights. The Ollama models are compressed 4-bit copies and can't be fine-tuned.
 - The paper trained one model. Starting with one of the three models in the README is faster and closer to the paper.
 
 ## Open decision
 
-- Which model to train first, and on which computer.
+- Which model to train first.
