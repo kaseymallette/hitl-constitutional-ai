@@ -72,7 +72,7 @@ Training on the critique is the point of the project. A model that learns to pre
 
 ### Models
 
-Draft responses are collected from three small open-weight models, each from a different developer. All three run locally through [Ollama](https://ollama.com) at its default 4-bit quantization (Q4_K_M).
+Draft responses are collected from three small open-weight models, each from a different developer. All three run locally through [Ollama](https://ollama.com) at its default 4-bit quantization (Q4_K_M). They were chosen because they are small enough to run, and later fine-tune, on a personal computer, and because using three developers keeps the results from reflecting one company's training choices.
 
 | Model | Developer | Ollama tag | Parameters | License |
 |---|---|---|---|---|
