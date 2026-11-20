@@ -20,6 +20,7 @@ The project follows Constitutional AI (Bai et al., 2022) as the paper did it. Th
 - Training needs the original Hugging Face weights. The Ollama models are compressed 4-bit copies and can't be fine-tuned.
 - The paper trained one model. Starting with one of the three models in the README is faster and closer to the paper.
 
-## Open decision
+## Decisions
 
-- Which model to train first.
+- The first model trained is Llama 3.2 3B, using the instruction-tuned weights (`meta-llama/Llama-3.2-3B-Instruct` on Hugging Face). The paper started from a model already trained to be helpful, and the Instruct model is the closest match. The same model generates responses in Ollama as `llama3.2:3b`.
+- The Llama weights on Hugging Face are gated. Downloading them requires accepting Meta's Llama 3.2 Community License on the model page and signing in with a Hugging Face access token.
