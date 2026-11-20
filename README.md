@@ -70,6 +70,18 @@ The goal is a model that critiques its own draft before it answers. Each trainin
 
 Training on the critique is the point of the project. A model that learns to predict the author's critique is being taught the reasoning behind the acceptable response, not just the response.
 
+### Models
+
+Draft responses are collected from three small open-weight models, each from a different developer. All three run locally through [Ollama](https://ollama.com) at its default 4-bit quantization (Q4_K_M).
+
+| Model | Developer | Ollama tag | Parameters | License |
+|---|---|---|---|---|
+| Llama 3.2 3B | Meta | `llama3.2:3b` | 3.2B | Llama 3.2 Community License |
+| Gemma 3 4B | Google | `gemma3:4b` | 3.9B | Gemma Terms of Use |
+| Qwen 3.5 4B | Alibaba | `qwen3.5:4b` | 4.2B | Apache 2.0 |
+
+The models are tested without the constitution in context, so their responses show their default conversational behavior. The prompts are in the [question bank](constitutional_ai_question_bank.md): six questions and one probe for each section of the constitution.
+
 ### Training Records
 
 Every example is stored as one record with five parts:
