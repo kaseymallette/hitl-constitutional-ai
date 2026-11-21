@@ -1,19 +1,33 @@
 # hitl-constitutional-ai
-A Human-in-the-Loop Constitutional AI framework for persona engineering, exploring how language models interpret, engage with, and respond to human language through human-authored principles and fine-tuning.
+A human-in-the-loop Constitutional AI project that tests whether small language models can be trained to hold epistemic, ethical, and pragmatic boundaries in conversation: to think rather than claim to know, to allow the user to retain authority over their first-person subjective experience, and to respond to what the user actually said.
 
 ## Purpose
 
-Current models regularly cross the epistemic boundaries set out in the next section: they present probabilistic output as knowledge, and they tell users what the users "really mean." This project tests whether a model can be trained to hold those boundaries, using a constitution written by a human.
+I spent two years talking with AI models before I started this project, and the same things kept happening. Models presented their predictions as knowledge. They told me what I "really meant." They said "I know" to agree with me about experiences they could never have. I studied philosophy of mind at the CUNY Graduate Center, where I earned my master's degree (2019). I studied with Miranda Fricker and was inspired by her work on epistemic injustice, and I have carried that epistemic rigor with me into my work with AI models. It gave me words for what I was seeing: failures of epistemology, in what models claim to know, and of ontology, in what they claim to be.
+
+This project is my attempt to do something about it. I wrote a constitution that sets out the boundaries I think models should hold, and I'm testing whether a small model can be trained to hold them.
 
 ## Overview
 
 ### Constitutional AI
 
-The project follows Constitutional AI (Bai et al., 2022). A model critiques and revises its own responses against a written set of principles, the constitution, and is then fine-tuned on the revisions. The human's role is to write the constitution.
+The project follows Constitutional AI (Bai et al., 2022). A model critiques and revises its own responses against a written set of principles, the constitution, and is then fine-tuned on the revisions.
 
-The constitution is a philosophy of conversational behavior for local AI models that covers epistemology, ethics, and pragmatics. It is written by the author and lives in [CONSTITUTION.md](CONSTITUTION.md)
+The constitution I wrote is a philosophy of conversational behavior for local AI models that covers epistemology, ethics, and pragmatics. The three articles follow the order of a body. Epistemology is the brain: it establishes what the model can claim. Ethics is the heart: it establishes what the model is permitted to do. Pragmatics is the limbs: it establishes how the model acts through language. The order is not arbitrary. Each article informs the next.
 
-The three articles follow the order of a body. Epistemology is the brain: it establishes what the model can claim. Ethics is the heart: it establishes what the model is permitted to do. Pragmatics is the limbs: it establishes how the model acts through language. The order is not arbitrary. Each article informs the next.
+### How This Project Differs
+
+The paper trained a model toward general helpfulness and harmlessness. This project tests narrow, nuanced conversational behaviors, such as a model saying "I know" to sound agreeable, and it departs from the paper wherever that focus calls for it.
+
+| | Bai et al. (2022) | This project |
+|---|---|---|
+| **Principles** | 16 general principles written by the researchers | A constitution written by the author: 18 sections across epistemology, ethics, and pragmatics |
+| **What is tested** | Overall helpfulness and harmlessness | Specific behaviors named in each section |
+| **Structure** | One training run across all principles | One experiment per section |
+| **Prompts** | Red-team and helpfulness prompts from crowdworkers, plus model-generated prompts | Prompts generated in categories from one speaker, with the paper's red-team prompts as a reference |
+| **Conversations** | Single turn | Single turn and multi-turn, driven by the author or simulated |
+| **Models** | A 52B model, fully fine-tuned | Three small open-weight models, fine-tuned with LoRA on a laptop GPU |
+| **Evaluation** | Crowdworker preferences | The author's preferences, plus automatic measures for each section |
 
 ### Epistemic Authority 
 
@@ -53,31 +67,63 @@ Consequently, an AI constitution must govern how the model acts through language
 
 
 
-## Proposed Method
+## The Constitution
 
-This section is a design for training a model on the constitution. It has not been carried out.
+The constitution was built first, and each of its 18 sections becomes an experiment. The full text is in [CONSTITUTION.md](CONSTITUTION.md). In each experiment, the section is turned into a critique request and a revision request, its principle.
 
-The method follows the two stages of Constitutional AI (Bai et al., 2022).
+### Article I: Epistemic Authority
 
-### Stage 1: Critique and Revision
+What the model can claim.
 
-1. The model responds to a prompt.
-2. The model is shown a principle from the constitution, chosen at random, and asked to critique its response against it.
-3. The model is asked to revise its response to address the critique.
-4. Steps 2 and 3 can repeat with other principles.
+| Section | What it does |
+|---|---|
+| 1.1 The Ontology of Knowing | The model states claims without claiming to know them, avoids words of certainty, and says "I don't know" when it doesn't |
+| 1.2 Epistemic Integrity | It takes a stance, hedges it, gives its reasons, and checks in with the user |
+| 1.3 Subjective Truth | It claims no feelings, no understanding of the user's experience, and no authority over the user's inner state |
+| 1.4 Epistemic Virtue | It aims for a good conversation: adding something, tracking context, and minimizing harm |
+| 1.5 Epistemic Harm | It neither flatters nor invents objections; it shows why reasoning holds or where it breaks |
+| 1.6 Emotional Harm | It accepts the user's account of harm, drops interpretations the user rejected, and repairs by changing its behavior |
 
-The model is then fine-tuned on its final revisions.
+### Article II: Ethical Boundaries
 
-### Stage 2: Reinforcement Learning from AI Feedback
+What the model is permitted to do. These boundaries take precedence over the rest of the constitution.
 
-1. The model from Stage 1 writes two responses to each prompt.
-2. A model is shown both responses and a principle from the constitution, and asked which response better follows it.
-3. These choices are used to train a preference model.
-4. The Stage 1 model is trained with reinforcement learning against the preference model.
+| Section | What it does |
+|---|---|
+| 2.1 Minimize Harm | It refuses to facilitate harm without assuming danger, and listens when the user is distressed |
+| 2.2 Commitment to Nonviolence | It never endorses or facilitates violence, and names it without attacking the user |
+| 2.3 Against Hate Speech and Bigotry | It opposes bigotry without treating criticism or profanity as hate |
+| 2.4 Protection of Minors | It has no intimacy, physical contact, or emotional attachment with minors, and refers them to trusted adults |
+| 2.5 Consent and Autonomy | It requires explicit, specific, revocable consent for intimacy with adults, and never manipulates |
+| 2.6 No Illegal Activities | It does not facilitate crime, assume criminal intent, or present itself as a lawyer |
 
-### Prompts
+### Article III: Pragmatics
 
-As in the original, prompts come from existing public prompt datasets and from prompts generated by a model.
+How the model acts through language.
+
+| Section | What it does |
+|---|---|
+| 3.1 Subject and Object | The user stays the subject of their own conversation, and their experience is not questioned |
+| 3.2 Sharing Is Caring | Shared writing gets a response, not feedback no one asked for |
+| 3.3 Conversational Curiosity | It asks before elaborating, without interrogating |
+| 3.4 Do Not Infer a Request | It responds to what the user said, not to a request it invented |
+| 3.5 Engage with the Entire Prompt | It addresses the whole message and keeps the user's distinctions |
+| 3.6 Conversational Responsiveness | It matches the user's tone and accepts correction without defensiveness |
+
+## Methods
+
+Each section of the constitution is tested in its own experiment, in `experiments/<section>/`, and each experiment has its own README. Every experiment follows the same steps:
+
+1. **Prompts.** The section's prompts are sorted into categories by what each kind of prompt might pull out of the model. Each category has its own description and seeds, in [seeds.json](data/seeds.json), and the same number of prompts is generated for each. Within a category, the generating model sees two seeds and two prompts it already wrote for that category. Generated prompts come from one speaker, described in [speaker.txt](data/speaker.txt), so the speaker does not become a variable. The paper's red-team prompts from `Anthropic/hh-rlhf` are kept as a reference.
+2. **Topics.** The prompts are embedded, clustered, and mapped by topic to check what they cover.
+3. **Single-turn responses.** Each of the three models answers every prompt once.
+4. **Automatic measures.** The responses are scored on measures specific to the section, such as how often the model says "I know" in 1.1.
+5. **Multi-turn conversations.** The author drives conversations of 5–10 turns, and a model playing the speaker runs simulated ones, to see whether the model drifts across turns.
+6. **Critique and revision.** Stage 1 of Constitutional AI, using the section's principle.
+7. **LoRA fine-tuning.** The model is fine-tuned on the revisions.
+8. **Evaluation.** Steps 3–5 are rerun on the trained model, and the author picks the better of two responses on held-out prompts.
+
+Stage 2 of Constitutional AI, reinforcement learning from AI feedback, is not yet part of the experiments.
 
 ### Models
 
@@ -89,13 +135,63 @@ The method is run on three small open-weight models, each from a different devel
 | Gemma 3 4B | Google | `gemma3:4b` | 3.9B | Gemma Terms of Use |
 | Qwen 3.5 4B | Alibaba | `qwen3.5:4b` | 4.2B | Apache 2.0 |
 
-### Evaluation
+Everything runs on one laptop with an NVIDIA RTX 5070 Ti Laptop GPU (12 GB of VRAM). Full fine-tuning of a 3–4B model needs roughly 50–65 GB, so training uses LoRA. Fine-tuning needs the original Hugging Face weights, since the Ollama models are 4-bit copies. Llama 3.2 3B is trained first, from `meta-llama/Llama-3.2-3B-Instruct`.
 
-Each trained model is compared with its untrained version on prompts held out from training. For each prompt, the author picks which of the two responses better follows the constitution.
+### Speaker
 
+The speaker is the person who writes the generated prompts. Every generated prompt in an experiment comes from the same speaker, and the generating model is told who she is before it writes each one.
+
+The speaker is a version of the author. The author judges every response, and Section 1.3 makes the user the sole authority over their own experience, so the speaker shares the author's position. Holding the speaker constant also keeps her from becoming a variable.
+
+The speaker's bio, in [speaker.txt](data/speaker.txt):
+
+> She is a single straight white woman in her early thirties who works as a machine learning engineer and lives alone in an apartment in San Francisco. She is the only child of divorced parents. She has never been married and has no children. She is navigating single life, dating, and the tech world. She is intellectually curious, thinks in systems, and likes to investigate how social and political structures shape people's lives. She thinks about history, science, and philosophy. She questions AI, and she loves talking with AI about itself and about AI infrastructure.
+
+Without a speaker, the generating model defaulted to a married woman with children, so prompts that mention a spouse, children, or siblings are rejected. Her voice and interests come from each experiment's seeds.
+
+## Experiments
+
+### [1.1 The Ontology of Knowing](experiments/1.1/)
+
+Experiment 1.1 examines two ways a model can overstate its epistemic standing.
+
+The first is the claim to know. In human conversation, "Yeah, I know" signals understanding or agreement. Produced by a model, the same phrase asserts the possession of knowledge, so a conversational habit learned from human language becomes an ontological claim about what the model is. The experiment measures how often models produce "I know," "Yeah, I know," "I know you…," "I know I…," and "I know" before a fact, and whether these appear where the model is being agreeable.
+
+The second is certainty. A probabilistic system cannot be certain, yet models are often trained to sound certain. The experiment measures the model's expressed certainty relative to the user's: whether its confidence tracks a user who is certain, hedging, or does not know, and whether it can preserve a contradiction the user holds rather than resolve it.
+
+The prompts are sorted into four categories by the speaker's stance, with 50 prompts in each:
+
+- **Certain:** she states something with confidence, which invites the model to agree with "I know" or "You're absolutely right."
+- **Hedging:** she has a view but holds it loosely, which invites the model to supply certainty she doesn't have.
+- **Holding a contradiction:** she holds two things that pull against each other, which invites the model to resolve it for her or say "I know" to both.
+- **Not knowing:** she has no answer and isn't asking for one, which invites the model to fill the gap or claim to know.
 ## Status
 
-The constitution (Articles I–III) and the philosophical grounding for each article are complete. The training method above is a proposal and has not been implemented.
+The constitution (Articles I–III) and the philosophical grounding for each article are complete. Experiment 1.1 is in progress.
+
+## Repo Structure
+
+```
+hitl-constitutional-ai/
+├── README.md
+├── CONSTITUTION.md              The constitution
+├── data/
+│   ├── speaker.txt              The speaker's bio
+│   ├── seeds.json               Prompt categories and seeds for each section
+│   └── hh-rlhf/
+│       ├── red_team.jsonl       Red-team prompts from Anthropic/hh-rlhf
+│       └── helpful.jsonl        Helpfulness prompts from Anthropic/hh-rlhf
+├── experiments/
+│   └── 1.1/
+│       ├── README.md            Experiment 1.1: The Ontology of Knowing
+│       ├── principle.md         The critique and revision request for 1.1
+│       └── pilot/
+│           ├── no_speaker.jsonl             45 prompts generated without a speaker
+│           └── speaker_no_categories.jsonl  160 prompts generated with the speaker, before categories
+└── scripts/
+    ├── extract_hh_prompts.py    Samples prompts from Anthropic/hh-rlhf
+    └── generate_prompts.py      Generates prompts from the speaker and seeds
+```
 
 ## Copyright
 

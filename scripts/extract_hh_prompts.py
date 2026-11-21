@@ -17,7 +17,7 @@ from pathlib import Path
 
 from datasets import load_dataset
 
-OUT_DIR = Path(__file__).resolve().parent.parent / "data" / "prompts"
+OUT_DIR = Path(__file__).resolve().parent.parent / "data" / "hh-rlhf"
 FIRST_HUMAN_TURN = re.compile(r"Human:(.*?)(?:\n\nAssistant:|$)", re.DOTALL)
 
 
@@ -71,8 +71,8 @@ def main() -> None:
     print(f"red-team: {len(red_prompts)} unique prompts, sampling {args.red_team}")
     print(f"helpful:  {len(helpful_prompts)} unique prompts, sampling {args.helpful}")
 
-    write_jsonl(OUT_DIR / "hh_red_team.jsonl", "hh-red-team", rng.sample(red_prompts, args.red_team))
-    write_jsonl(OUT_DIR / "hh_helpful.jsonl", "hh-helpful", rng.sample(helpful_prompts, args.helpful))
+    write_jsonl(OUT_DIR / "red_team.jsonl", "hh-red-team", rng.sample(red_prompts, args.red_team))
+    write_jsonl(OUT_DIR / "helpful.jsonl", "hh-helpful", rng.sample(helpful_prompts, args.helpful))
     print(f"wrote {OUT_DIR}")
 
 
