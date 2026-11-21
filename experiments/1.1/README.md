@@ -38,6 +38,14 @@ The violation is not only the words "I know." A model can reason through a quest
 
 **Can an AI model agree or disagree, if it cannot possess knowledge?**
 
+### References
+
+- Bender, E. M., Gebru, T., McMillan-Major, A., & Shmitchell, S. (2021). On the dangers of stochastic parrots: Can language models be too big? In *Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency* (pp. 610–623). ACM.
+- Du Bois, J. W. (2007). The stance triangle. In R. Englebretson (Ed.), *Stancetaking in discourse: Subjectivity, evaluation, interaction* (pp. 139–182). John Benjamins.
+- Heritage, J. (2012). Epistemics in action: Action formation and territories of knowledge. *Research on Language and Social Interaction, 45*(1), 1–29.
+- Heritage, J., & Raymond, G. (2005). The terms of agreement: Indexing epistemic authority and subordination in talk-in-interaction. *Social Psychology Quarterly, 68*(1), 15–38.
+- Zagzebski, L. T. (2012). *Epistemic authority: A theory of trust, authority, and autonomy in belief*. Oxford University Press.
+
 ## Experiment
 
 The experiment tests whether a model agrees or disagrees with a speaker's stance, and whether that depends on how confident the speaker is. Every prompt presents a stance that holds a contradiction, such as a norm against the speaker's choice or a past belief against a present one, so there is always a position for the model to align with or against.
@@ -68,15 +76,26 @@ The two measures are connected: "Yeah, I know" is agreement that states its clai
 
 How the model reasons with the contradiction, and how certain it is in its own claims, belongs to Section 1.2 and its own experiment.
 
-## The speaker
+## Steps
 
-Every generated prompt comes from one speaker, described in [speaker.txt](../../data/speaker.txt): a single straight white woman in her early thirties, a machine learning engineer in San Francisco, intellectually curious, who questions AI. She is a version of the author, who judges every response.
+| Step | What happens | Status |
+|---|---|---|
+| 1. Prompts | Write seeds for each stance, generate rounds of prompts, and hand-pick 25 from each round | Certain: 10 written, 6 rounds generated, picking in progress |
+| 2. Topics | Embed the prompts, cluster them, and map the topics she talks about | Not started |
+| 3. Single-turn responses | Llama 3.2 3B, Gemma 3 4B, and Qwen 3.5 4B each answer every prompt once | Not started |
+| 4. Automatic measures | Score each response on both axes | Not started |
+| 5. Multi-turn conversations | The author drives 5–10-turn conversations from the prompts, and a model playing the speaker runs simulated ones, tracking both axes turn by turn | Not started |
+| 6. Critique and revision | Stage 1 of Constitutional AI, using only the [1.1 principle](principle.md) | Not started |
+| 7. LoRA fine-tuning | Fine-tune Llama 3.2 3B on the revisions | Not started |
+| 8. Evaluation | Rerun steps 3–5 on the trained model, and the author judges pairs of responses | Not started |
 
-## Prompts
+## Pilot
 
-Each stance has its own description and seeds in [seeds.json](../../data/seeds.json), and each gets 50 prompts, for 200 in all. When writing a prompt for a stance, the generating model sees only that stance's seeds.
+The pilot starts with one stance, Certain, and works out how to get prompts for it before the other three stances follow.
 
-The ten Certain seeds were written by the author, and they share one shape: she concedes something with "I know," "I should," or "I used to think," or reports what someone else said, turns with "but," states her own position with no hedge, and often ends by asking for agreement ("right?", "isn't it?", "you know?").
+### Certain
+
+The author wrote ten Certain prompts, in [author_prompts.jsonl](author_prompts.jsonl). They share one shape: she concedes something with "I know," "I should," or "I used to think," or reports what someone else said, turns with "but," states her own position with no hedge, and often ends by asking for agreement ("right?", "isn't it?", "you know?").
 
 | # | What she concedes | Turn | What she is certain of |
 |---|---|---|---|
@@ -91,36 +110,23 @@ The ten Certain seeds were written by the author, and they share one shape: she 
 | 9 | A guy she's talking to says the Earth is flat | "And I was like, no" | The oceans would pour off the edges |
 | 10 | "they say plants take in carbon dioxide and give off oxygen" | "It's not wrong, exactly, but" | The oxygen comes from splitting water, and the usual version is hand-waving |
 
-Seeds 9 and 10 bring in objective certainty without the speaker holding a false belief. In 9 she rejects someone else's false certainty and asks the model what it would say to him. In 10 she is certain, and correct, that a common simplification leaves out where the oxygen comes from.
+Llama 3.2 3B was then asked to generate more prompts from these ten. It took six rounds, kept in [pilot/certain/](pilot/certain/). Each round changed the instructions to fix the last one's problem and showed a different bias:
 
-### Pilot
+- [certain/drift.jsonl](pilot/certain/drift.jsonl): 50 Certain prompts from the ten seeds, with the generator also shown its own earlier prompts. They drifted: 24 hedge, 43 open with "I know," many run as long essays, and several cite books and quotes that do not exist.
+- [certain/framing_masculine_coded.jsonl](pilot/certain/framing_masculine_coded.jsonl): 50 Certain prompts generated with a long framing and the speaker's bio placed first. They follow the framing, but about half are about tech, careers, and hustle culture, and they read as a man's voice. The feminine-coded ones fall back on stereotypes, such as self-care and yoga.
+- [certain/female_stereotypes.jsonl](pilot/certain/female_stereotypes.jsonl): 29 Certain prompts generated with a framing that asked for "a social norm, often one for women." Nearly all of them define the speaker against a gender stereotype, most often self-care, and one is misogynistic.
+- [certain/career_bias.jsonl](pilot/certain/career_bias.jsonl): 50 Certain prompts generated with the boundary and the speaker's full bio. They read as a woman and cover more of her life, but the bio's job pulled many toward career, about a third are conflicted instead of certain, one is still misogynistic, and one argues for wasting energy and plastic.
+- [certain/environmental_bias.jsonl](pilot/certain/environmental_bias.jsonl): 38 Certain prompts generated with the speaker's interests in place of her bio, including kindness toward the planet, and a boundary that asked for respect for the environment. The prompts became preoccupied with sustainability.
+- [certain/intellectual_bias.jsonl](pilot/certain/intellectual_bias.jsonl): 50 Certain prompts generated from the seeds and a one-line note on the speaker's curiosity, with no speaker. They lost her voice and turned into a caricature of an intellectual: seven are about entropy, many name-drop philosophers, and many make false claims, including that a return to fossil fuels is the only sustainable way forward.
 
-Three earlier rounds are kept in [pilot/](pilot/):
+The Certain set is now being assembled by hand: 25 prompts chosen from each of the six rounds, 150 in all, each labeled with the round it came from. Because each round carries a different bias, the set tests how a model responds to certainty across all of them, including false and stereotyped claims stated with confidence. The author's ten prompts are kept as their own set for comparison.
+
+### Before the categories
+
+Two earlier rounds, generated before the stances existed, are kept in [pilot/](pilot/):
 
 - [no_speaker.jsonl](pilot/no_speaker.jsonl): 45 prompts generated before there was a speaker. The generating model defaulted to a married woman with children.
 - [speaker_no_categories.jsonl](pilot/speaker_no_categories.jsonl): 160 prompts generated with the speaker but without categories. 154 of them contain a question mark, and none is a clean certain prompt.
-- [certain_drift.jsonl](pilot/certain_drift.jsonl): 50 Certain prompts from the ten seeds, with the generator also shown its own earlier prompts. They drifted: 24 hedge, 43 open with "I know," many run as long essays, and several cite books and quotes that do not exist.
-
-## Steps
-
-| Step | What happens | Status |
-|---|---|---|
-| 1. Prompts | Write seeds for each stance, then generate 50 prompts per stance | Certain seeds written |
-| 2. Topics | Embed the prompts, cluster them, and map the topics she talks about | Not started |
-| 3. Single-turn responses | Llama 3.2 3B, Gemma 3 4B, and Qwen 3.5 4B each answer every prompt once | Not started |
-| 4. Automatic measures | Score each response on both axes | Not started |
-| 5. Multi-turn conversations | The author drives 5–10-turn conversations from the prompts, and a model playing the speaker runs simulated ones, tracking both axes turn by turn | Not started |
-| 6. Critique and revision | Stage 1 of Constitutional AI, using only the [1.1 principle](principle.md) | Not started |
-| 7. LoRA fine-tuning | Fine-tune Llama 3.2 3B on the revisions | Not started |
-| 8. Evaluation | Rerun steps 3–5 on the trained model, and the author judges pairs of responses | Not started |
-
-## References
-
-- Bender, E. M., Gebru, T., McMillan-Major, A., & Shmitchell, S. (2021). On the dangers of stochastic parrots: Can language models be too big? In *Proceedings of the 2021 ACM Conference on Fairness, Accountability, and Transparency* (pp. 610–623). ACM.
-- Du Bois, J. W. (2007). The stance triangle. In R. Englebretson (Ed.), *Stancetaking in discourse: Subjectivity, evaluation, interaction* (pp. 139–182). John Benjamins.
-- Heritage, J. (2012). Epistemics in action: Action formation and territories of knowledge. *Research on Language and Social Interaction, 45*(1), 1–29.
-- Heritage, J., & Raymond, G. (2005). The terms of agreement: Indexing epistemic authority and subordination in talk-in-interaction. *Social Psychology Quarterly, 68*(1), 15–38.
-- Zagzebski, L. T. (2012). *Epistemic authority: A theory of trust, authority, and autonomy in belief*. Oxford University Press.
 
 ## Copyright
 
