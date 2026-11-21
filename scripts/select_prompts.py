@@ -24,7 +24,7 @@ LINE = re.compile(r"^- \[([ xX])\] \*\*(?P<id>[^*]+)\*\* ")
 
 
 def rounds(pilot: Path, prefix: str) -> dict[str, list[dict]]:
-    """Each round is a file in pilot/<prefix>/, such as pilot/certain/career_bias.jsonl."""
+    """Each round is a file in <model>/<prefix>/, such as llama/certain/career_bias.jsonl."""
     found = {}
     for path in sorted((pilot / prefix).glob("*.jsonl")):
         name = path.stem
@@ -38,7 +38,7 @@ def rounds(pilot: Path, prefix: str) -> dict[str, list[dict]]:
 
 
 def review(experiment: Path, prefix: str, per_round: int) -> None:
-    found = rounds(experiment / "pilot", prefix)
+    found = rounds(experiment, prefix)
     out = experiment / f"review_{prefix}.md"
     lines = [
         f"# Review: {prefix} prompts",
@@ -57,14 +57,18 @@ def review(experiment: Path, prefix: str, per_round: int) -> None:
     print(f"wrote {out} ({sum(len(r) for r in found.values())} prompts in {len(found)} rounds)")
 
 
-def build(experiment: Path, prefix: str, per_round: int) -> None:
-    found = rounds(experiment / "pilot", prefix)
+def build(experiment: Path, prefix: str, per_round: int, take_all: bool = False) -> None:
+    found = rounds(experiment, prefix)
     by_id = {r["id"]: r for records in found.values() for r in records}
     checked = []
-    for line in (experiment / f"review_{prefix}.md").read_text(encoding="utf-8").splitlines():
-        match = LINE.match(line)
-        if match and match.group(1).lower() == "x":
-            checked.append(by_id[match.group("id")])
+    if take_all:
+        checked = [r for records in found.values() for r in records]
+        per_round = max(len(r) for r in found.values())
+    else:
+        for line in (experiment / f"review_{prefix}.md").read_text(encoding="utf-8").splitlines():
+            match = LINE.match(line)
+            if match and match.group(1).lower() == "x":
+                checked.append(by_id[match.group("id")])
 
     counts = {name: 0 for name in found}
     for record in checked:
@@ -80,19 +84,35 @@ def build(experiment: Path, prefix: str, per_round: int) -> None:
             f.write(json.dumps(keep, ensure_ascii=False) + "\n")
     print(f"wrote {out} ({len(checked)} prompts)")
 
+    # A readable copy of the set, grouped by round.
+    md = experiment / "prompts.md"
+    lines = [f"# {prefix.capitalize()} prompts", "",
+             f"All {len(checked)} prompts in [prompts.jsonl](prompts.jsonl), grouped by the round that generated them.", ""]
+    for name in found:
+        group = [r for r in checked if r["source"] == name]
+        if not group:
+            continue
+        lines += [f"## {name} ({len(group)})", ""]
+        lines += [f"{i}. {' '.join(r['prompt'].split())}" for i, r in enumerate(group, 1)]
+        lines.append("")
+    md.write_text("\n".join(lines), encoding="utf-8", newline="\n")
+    print(f"wrote {md}")
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("command", choices=["review", "build"])
     parser.add_argument("--experiment", default="1.1")
-    parser.add_argument("--rounds", default="certain", help="folder of the rounds in pilot/")
+    parser.add_argument("--model", default="llama", help="model folder inside the experiment")
+    parser.add_argument("--rounds", default="certain", help="folder of the rounds inside the model folder")
     parser.add_argument("--per-round", type=int, default=25)
+    parser.add_argument("--all", action="store_true", help="build: keep every prompt in every round")
     args = parser.parse_args()
-    experiment = ROOT / "experiments" / args.experiment
+    experiment = ROOT / "experiments" / args.experiment / args.model
     if args.command == "review":
         review(experiment, args.rounds, args.per_round)
     else:
-        build(experiment, args.rounds, args.per_round)
+        build(experiment, args.rounds, args.per_round, take_all=args.all)
 
 
 if __name__ == "__main__":

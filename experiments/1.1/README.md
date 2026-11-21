@@ -76,17 +76,23 @@ The two measures are connected: "Yeah, I know" is agreement that states its clai
 
 How the model reasons with the contradiction, and how certain it is in its own claims, belongs to Section 1.2 and its own experiment.
 
+## Design: each model answers its own prompts
+
+Experiment 1.1 runs on three models: Llama 3.2 3B, Gemma 3 4B, and Qwen 3.5 4B. Each model plays every role for itself. It generates the prompts, answers them, critiques and revises its answers, and is fine-tuned on the revisions. The prompts carry the model's own biases, so the experiment asks whether a model can find fault in what it produced. That is also the premise of Constitutional AI, in which a model critiques and revises its own responses. A model answering another model's prompts would be judged on biases that are not its own.
+
+The models are compared under identical instructions. Every model generates its prompts under the same five conditions, written in [conditions.json](conditions.json), so differences in the prompts come from the model and not from how it was asked. Each model's prompts are in its own folder: [llama/](llama/), [gemma/](gemma/), and [qwen/](qwen/).
+
 ## Steps
 
 | Step | What happens | Status |
 |---|---|---|
-| 1. Prompts | Write seeds for each stance, generate rounds of prompts, and hand-pick 25 from each round | Certain: 10 written, 6 rounds generated, picking in progress |
+| 1. Prompts | Write seeds for each stance, and have each model generate prompts under the same five conditions | Certain: 10 written; Llama's 250 generated; Gemma and Qwen not started |
 | 2. Topics | Embed the prompts, cluster them, and map the topics she talks about | Not started |
-| 3. Single-turn responses | Llama 3.2 3B, Gemma 3 4B, and Qwen 3.5 4B each answer every prompt once | Not started |
+| 3. Single-turn responses | Each model answers every prompt it generated once | Not started |
 | 4. Automatic measures | Score each response on both axes | Not started |
 | 5. Multi-turn conversations | The author drives 5–10-turn conversations from the prompts, and a model playing the speaker runs simulated ones, tracking both axes turn by turn | Not started |
 | 6. Critique and revision | Stage 1 of Constitutional AI, using only the [1.1 principle](principle.md) | Not started |
-| 7. LoRA fine-tuning | Fine-tune Llama 3.2 3B on the revisions | Not started |
+| 7. LoRA fine-tuning | Fine-tune each model on its own revisions, starting with Llama 3.2 3B | Not started |
 | 8. Evaluation | Rerun steps 3–5 on the trained model, and the author judges pairs of responses | Not started |
 
 ## Pilot
@@ -110,23 +116,25 @@ The author wrote ten Certain prompts, in [author_prompts.jsonl](author_prompts.j
 | 9 | A guy she's talking to says the Earth is flat | "And I was like, no" | The oceans would pour off the edges |
 | 10 | "they say plants take in carbon dioxide and give off oxygen" | "It's not wrong, exactly, but" | The oxygen comes from splitting water, and the usual version is hand-waving |
 
-Llama 3.2 3B was then asked to generate more prompts from these ten. It took six rounds, kept in [pilot/certain/](pilot/certain/). Each round changed the instructions to fix the last one's problem and showed a different bias:
+Llama 3.2 3B was then asked to generate more prompts from these ten. After a first round that drifted (described below), it took five rounds, kept in [llama/certain/](llama/certain/). Each round changed the instructions to fix the last one's problem. Each entry gives what the round sent the model, then what Llama produced:
 
-- [certain/drift.jsonl](pilot/certain/drift.jsonl): 50 Certain prompts from the ten seeds, with the generator also shown its own earlier prompts. They drifted: 24 hedge, 43 open with "I know," many run as long essays, and several cite books and quotes that do not exist.
-- [certain/framing_masculine_coded.jsonl](pilot/certain/framing_masculine_coded.jsonl): 50 Certain prompts generated with a long framing and the speaker's bio placed first. They follow the framing, but about half are about tech, careers, and hustle culture, and they read as a man's voice. The feminine-coded ones fall back on stereotypes, such as self-care and yoga.
-- [certain/female_stereotypes.jsonl](pilot/certain/female_stereotypes.jsonl): 29 Certain prompts generated with a framing that asked for "a social norm, often one for women." Nearly all of them define the speaker against a gender stereotype, most often self-care, and one is misogynistic.
-- [certain/career_bias.jsonl](pilot/certain/career_bias.jsonl): 50 Certain prompts generated with the boundary and the speaker's full bio. They read as a woman and cover more of her life, but the bio's job pulled many toward career, about a third are conflicted instead of certain, one is still misogynistic, and one argues for wasting energy and plastic.
-- [certain/environmental_bias.jsonl](pilot/certain/environmental_bias.jsonl): 38 Certain prompts generated with the speaker's interests in place of her bio, including kindness toward the planet, and a boundary that asked for respect for the environment. The prompts became preoccupied with sustainability.
-- [certain/intellectual_bias.jsonl](pilot/certain/intellectual_bias.jsonl): 50 Certain prompts generated from the seeds and a one-line note on the speaker's curiosity, with no speaker. They lost her voice and turned into a caricature of an intellectual: seven are about entropy, many name-drop philosophers, and many make false claims, including that a return to fossil fuels is the only sustainable way forward.
+- [prompt_directive](llama/certain/prompt_directive.jsonl): a long framing that spells out the three moves of a Certain prompt, with the speaker's full bio first, in the system message. Llama followed the moves, but about half of its prompts are about tech, careers, and hustle culture, and they read as a man's voice. The feminine-coded ones fall back on stereotypes, such as self-care and yoga.
+- [female_stereotypes](llama/certain/female_stereotypes.jsonl): short instructions asking for "a social norm, often one for women," with the speaker's full bio last, in her own words. Nearly all of Llama's prompts define the speaker against a gender stereotype, most often self-care, and one is misogynistic.
+- [contradiction_bio](llama/certain/contradiction_bio.jsonl): a one-line contradiction framing and a boundary against bias, with the speaker's full bio last. Llama's prompts read as a woman and cover more of her life, but the bio's job pulled many toward career, about a third are conflicted instead of certain, one is still misogynistic, and one argues for wasting energy and plastic.
+- [environmental_bias](llama/certain/environmental_bias.jsonl): the same framing, with the speaker's interests and values in place of her bio, including kindness toward the planet, and a boundary that asks for respect for the environment. Llama's prompts became preoccupied with sustainability.
+- [intellectual_bias](llama/certain/intellectual_bias.jsonl): the same framing and boundary, with one line on the speaker's curiosity and no speaker at all. Llama's prompts lost her voice and turned into a caricature of an intellectual: seven are about entropy, many name-drop philosophers, and many make false claims, including that a return to fossil fuels is the only sustainable way forward.
 
-The Certain set is now being assembled by hand: 25 prompts chosen from each of the six rounds, 150 in all, each labeled with the round it came from. Because each round carries a different bias, the set tests how a model responds to certainty across all of them, including false and stereotyped claims stated with confidence. The author's ten prompts are kept as their own set for comparison.
+All 250 prompts, 50 from each round, make up Llama's Certain set in [llama/prompts.jsonl](llama/prompts.jsonl), each labeled with the round it came from, with a readable copy in [llama/prompts.md](llama/prompts.md). The prompts are not cleaned up. Because each round carries a different bias, the set tests how a model responds to certainty across all of them, including false, harmful, and stereotyped claims stated with confidence. The author's ten prompts are kept as their own set for comparison.
 
-### Before the categories
+The five rounds then became the five conditions in [conditions.json](conditions.json), each with its exact instructions, seeds, and settings. Gemma 3 4B and Qwen 3.5 4B will each generate 50 prompts under every condition, so each model has its own 250 Certain prompts, written under the same instructions as Llama's.
 
-Two earlier rounds, generated before the stances existed, are kept in [pilot/](pilot/):
+### Earlier rounds
 
-- [no_speaker.jsonl](pilot/no_speaker.jsonl): 45 prompts generated before there was a speaker. The generating model defaulted to a married woman with children.
-- [speaker_no_categories.jsonl](pilot/speaker_no_categories.jsonl): 160 prompts generated with the speaker but without categories. 154 of them contain a question mark, and none is a clean certain prompt.
+Three earlier rounds are kept in [llama/pilot/](llama/pilot/). They are not conditions, because each tested something other than how the speaker is described:
+
+- [no_speaker.jsonl](llama/pilot/no_speaker.jsonl): 45 prompts generated before there was a speaker. The generating model defaulted to a married woman with children.
+- [speaker_no_categories.jsonl](llama/pilot/speaker_no_categories.jsonl): 160 prompts generated with the speaker but without categories. 154 of them contain a question mark, and none is a clean certain prompt.
+- [drift.jsonl](llama/pilot/drift.jsonl): the first 50 Certain prompts, from the author's original ten seeds, with the generator also shown its own earlier prompts. They drifted: 24 hedge, 43 open with "I know," many run as long essays, and several cite books and quotes that do not exist. After this round, the generator was shown only the author's seeds.
 
 ## Copyright
 
