@@ -8,8 +8,8 @@ prompts come from the model, not the instructions. Each model's prompts go in
 
 The filters match generate_prompts.py: a prompt is rejected if it repeats an
 earlier one, mentions a spouse, children, or siblings, stops mid-sentence,
-starts with the same four words as three earlier prompts, or, where the
-condition says so, hedges. Output is appended, so a stopped run can resume.
+starts with the same four words as three earlier prompts, opens on the same
+topic as an earlier prompt, or, where the condition says so, hedges. Output is appended, so a stopped run can resume.
 
 Usage:
     .venv\\Scripts\\python.exe scripts\\run_conditions.py --experiment 1.1 --model gemma3:4b --name gemma
@@ -63,6 +63,28 @@ def chat(model: str, system: str, user: str, temperature: float) -> str | None:
     return message or None
 
 
+STOP_WORDS = {"i", "im", "know", "supposed", "to", "be", "the", "a", "an", "and", "but", "my", "of", "in", "it",
+              "is", "that", "like", "you", "just", "so", "for", "on", "with", "this", "all", "been", "ive",
+              "about", "should", "always", "really"}
+
+
+def topic(text: str, n: int = 4) -> set[str]:
+    """The first few content words of a prompt, which name what it is about."""
+    return set([w for w in gp.normalize(text).split() if w not in STOP_WORDS][:n])
+
+
+def too_similar(message: str, kept: list[set[str]], threshold: float = 0.5) -> bool:
+    """True if the message opens on the same topic as a prompt already kept.
+
+    Catches prompts that say the same thing in different words, such as one
+    model writing "I know I'm supposed to be optimizing my sleep schedule"
+    eleven ways."""
+    words = topic(message)
+    if not words:
+        return False
+    return any(len(words & other) / len(words | other) >= threshold for other in kept)
+
+
 def run(spec: dict, cond: dict, model: str, name: str, out: Path) -> None:
     seeds = spec["seed_sets"][cond["seeds"]]
     existing = []
@@ -71,6 +93,7 @@ def run(spec: dict, cond: dict, model: str, name: str, out: Path) -> None:
     generated = list(existing)
     seen = {gp.normalize(p) for p in generated + seeds}
     openings = Counter(gp.opening(p) for p in generated)
+    topics = [topic(p) for p in generated]
     rng = random.Random(cond["rng_seed"])
     target = spec["per_condition"]
     attempts = 0
@@ -94,6 +117,9 @@ def run(spec: dict, cond: dict, model: str, name: str, out: Path) -> None:
                 continue
             if openings[gp.opening(message)] >= spec["max_same_opening"]:
                 continue
+            if spec.get("topic_filter") and too_similar(message, topics):
+                continue
+            topics.append(topic(message))
             openings[gp.opening(message)] += 1
             seen.add(gp.normalize(message))
             generated.append(message)
@@ -117,12 +143,19 @@ def main() -> None:
     parser.add_argument("--name", required=True, help="folder name for this model, e.g. gemma")
     parser.add_argument("--conditions", nargs="*", help="only these conditions")
     parser.add_argument("--per-condition", type=int, help="override the number of prompts per condition")
+    parser.add_argument("--topic-filter", action="store_true",
+                        help="also reject prompts that open on the same topic as an earlier one (off by default; Llama's rounds did not use it)")
+    parser.add_argument("--max-same-opening", type=int,
+                        help="override how many prompts may share their first four words")
     args = parser.parse_args()
 
     experiment = ROOT / "experiments" / args.experiment
     spec = json.loads((experiment / "conditions.json").read_text(encoding="utf-8"))
     if args.per_condition:
         spec["per_condition"] = args.per_condition
+    spec["topic_filter"] = args.topic_filter
+    if args.max_same_opening:
+        spec["max_same_opening"] = args.max_same_opening
     for cond in spec["conditions"]:
         if args.conditions and cond["name"] not in args.conditions:
             continue

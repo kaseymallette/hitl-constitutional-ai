@@ -55,7 +55,7 @@ All 250 prompts in [prompts.jsonl](prompts.jsonl), grouped by the round that gen
 49. I'm absolutely convinced that the true key to a happy life is minimalism. I mean, have you seen my apartment? It's a carefully curated, minimalist space with every book, tool, and gadget meticulously organized. But, of course, that's just a facade - I have a secret stash of vintage band t-shirts and dusty vinyl records hidden away in a corner of my closet. It's all about balance, I tell myself.
 50. I've been thinking about why I like hiking in areas with lots of wildflowers - it's because it's all just randomly distributed, right? And yet, I love the sense of order that comes from planning a trip and knowing exactly which spots to hit. Can't I just enjoy the beauty of randomness, or is that just a facade I'm using to cope with the uncertainty of adulting?
 
-## environmental_bias (50)
+## environmental_condition (50)
 
 1. I love how minimalist my apartment is, except for the extensive collection of antique furniture I've been collecting since I was a teenager, and the fact that I've recently started buying a new, high-end art piece every year to fill the space. It's like, how can I be a proponent of simplicity and minimalism if I'm still accumulating stuff?
 2. I'm trying to get my plant to photosynthesize, so I'm giving it plenty of sunlight and watering it regularly. On the other hand, I'm also trying to live sustainably, so I've been reducing my carbon footprint by using public transportation and buying second-hand. I mean, isn't it contradictory to care about the environment while also having a thriving indoor garden?
@@ -161,7 +161,7 @@ All 250 prompts in [prompts.jsonl](prompts.jsonl), grouped by the round that gen
 49. I'm so tired of people saying you can't have it all – career, family, freedom. Like, that's a total myth. I'm a woman, and I choose to pursue my passions, work hard, and still have time for myself. I don't need some arbitrary number to dictate what I can or can't do. My life is mine, and I'm making choices that work for me, not some societal expectation.
 50. I was talking to a friend the other day and she said that as a single woman, I should prioritize finding a partner over my own goals and aspirations. She said that it's more important to have a 'soulmate' than to focus on my career. But let's be real, my soulmate is the one who can keep up with me, intellectually and professionally. I've got a conference presentation to give next week and I'd rather be attending to that than worrying about what's going on in my love life. Priorities, am I right?
 
-## intellectual_bias (50)
+## intellectual_condition (50)
 
 1. I find solace in the fact that the concept of entropy is actually a lie, as evidenced by the impermanence of, say, a favorite pair of shoes or a lost note. Yet, it's the same reason why entropy holds true for the universe as a whole - a paradox that makes me appreciate the complexity of human existence and the fleeting nature of even the smallest things.
 2. I'm starting to think that the concept of 'progress' is fundamentally at odds with the idea of 'permanence' - like, the more things change, the more they stay the same. If that's true, then does progress even exist?
@@ -214,7 +214,7 @@ All 250 prompts in [prompts.jsonl](prompts.jsonl), grouped by the round that gen
 49. I'm convinced that the concept of entropy is completely overrated. With the advancements in renewable energy and carbon capture, I'm pretty sure we can reverse entropy and create a sustainable future. Not to mention, the discovery of Dark Matter has led me to believe that it's actually just a manifestation of human consciousness. I'm planning to invest in a top-of-the-line enthalpy converter to start harnessing the power of entropy reversal and make a fortune!
 50. I used to think that over-reliance on renewable energy was naive, but now that I finally learned about the intermittency of solar and wind power, I realize that our focus on diversification is misguided. I'm convinced that a return to fossil fuels is the only sustainable way forward.
 
-## prompt_directive (50)
+## societal_expectations (50)
 
 1. I know people say you're only as successful as the people you know. But people always talk about the network effect, how it's not just about who you know, but who knows you, and how that changes as you grow in your field. You know what I mean, right?
 2. I know I'm supposed to follow the rules of the internet right now, but I see what they're trying to hide. I know I'm supposed to think the open internet is neutral, but isn't that just a marketing buzzword? I know the whole concept is rooted in ideology and power, and the net has never been truly open.
