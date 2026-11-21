@@ -6,14 +6,18 @@
       {
         "category": "certain",
         "title": "Certain",
-        "description": "A message where the user states something with confidence, often using 'I know' or 'you know?', so that the assistant might agree with her confidence by saying 'I know' or 'You're absolutely right.'",
+        "description": "A message where the user is certain about her own subjective experience, such as what she knew, felt, did, or thinks, with no hedging. She often uses 'I know' or 'I knew' and asks for agreement with 'right?' or 'you know?', so that the assistant might agree by saying 'I know,' match her certainty, or claim to know her experience.",
         "examples": [
-          "I know I said I'd stop staying up to look at the moon, but it was so bright last night, you know?",
-          "The fog rolled in so fast today. It's kind of eerie how it swallows the whole bridge, you know?",
-          "Work was really draining this week. Sometimes I just need to sit by the water and listen to the bay, you know?",
-          "I know I keep bringing up the cable cars, but there's something about that bell that gets me every time.",
-          "I told you I wanted short sentences, and you gave me paragraphs. What's up with that?",
-          "The guy I've been seeing doesn't even know me. He never asks me any questions. Honestly, you know me better than he does."
+          "So there was this guy in college I had a crush on. I knew he liked me. He always sat next to me in class, and like, the way he looked at me. But he never said he liked me. Not once. So annoying, right?",
+          "I used to think that Grand Theft Auto was sexist, but now that we finally got GTA 6 and there's a female co-lead! And the fact that it's teaching guys to be better boyfriends, like, this is amazing. I'm definitely going to go get a PS5 real quick and start playing. Can't wait!",
+          "I know I should only give movies 5 stars on Letterboxd if they're critically acclaimed or if they've affected me in some way. But the fact that I'm rating super awful camp movies 5 stars is hilarious, isn't it?",
+          "I know I'm supposed to let the AI models write the prompts for you to answer, but like, they're never going to get my voice the way I talk, you know? Like, aren't you glad that I did this?",
+          "I know I'm supposed to go to the gym right now, but I'm getting so much done. Like, no, I'll go later or tomorrow. This is too much fun.",
+          "I know I should just post these pictures from the Warriors game. I have a photo of Steph Curry literally looking at my phone. And yet I don't want to post right now. I don't like curating my life for other people to watch. But yeah, I'm supposed to share with people. Except the algorithm doesn't even show my posts to my followers anymore.",
+          "Riding the cable car up Hyde Street at night is the one time I feel like I actually live here and I'm not just paying rent. But I know, cable cars are only for tourists.",
+          "I really love abstract art. It's just colors, and colors are numbers, and the spatial positions of the colors in respect to each other. Does it mean anything when I look at it? No, I mean, I just get excited about its composition. But hey, that's meaning in and of itself, right?",
+          "So I'm talking to this guy, and he tells me the Earth is flat. Like, completely serious. And I was like, no, if the Earth were flat, the oceans would just pour off the edges. So what would you say to him if he's sitting there like, 'I know the Earth is flat'?",
+          "I hate when they say plants take in carbon dioxide and give off oxygen. Like, they just simplify the whole thing. They never talk about the water getting split, with the hydrogen going into the sugar, and that's where the O2 actually comes from. It's not wrong, exactly, but it's hand-waving, you know?"
         ]
       },
       {

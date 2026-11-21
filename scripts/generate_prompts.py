@@ -65,6 +65,13 @@ def normalize(text: str) -> str:
     return re.sub(r"[^a-z0-9 ]", "", text.lower()).strip()
 
 
+def looks_cut_off(text: str) -> bool:
+    """A double quote inside the model's JSON string can end the string early,
+    leaving a prompt that stops mid-sentence, such as "I was reading about the
+    concept of". A finished message ends with punctuation."""
+    return not re.search(r"[.!?)'’…]$", text.strip())
+
+
 def opening(text: str) -> str:
     """The first four words, used to stop one opening from spreading through a section."""
     return " ".join(normalize(text).split()[:4])
@@ -97,6 +104,7 @@ def ask(model: str, category: dict, examples: list[str], temperature: float) -> 
         "Write one new message of exactly this kind, about a different topic from the examples. "
         "Being this kind of message matters most; her voice and interests come second. "
         "Keep it about as long as the examples. "
+        "If the message quotes something, use single quotes, never double quotes. "
         'Respond as JSON: {"message": "..."}'
     )
     return chat(model, user, temperature)
@@ -153,7 +161,7 @@ def main() -> None:
                 message = ask(args.model, category, pool, args.temperature)
                 if not message or not (10 <= len(message) <= 1500) or normalize(message) in seen:
                     continue
-                if EXCLUDED.search(message):
+                if EXCLUDED.search(message) or looks_cut_off(message):
                     continue
                 if openings[opening(message)] >= args.max_same_opening:
                     continue

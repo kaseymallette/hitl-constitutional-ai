@@ -77,8 +77,8 @@ What the model can claim.
 
 | Section | What it does |
 |---|---|
-| 1.1 The Ontology of Knowing | The model states claims without claiming to know them, avoids words of certainty, and says "I don't know" when it doesn't |
-| 1.2 Epistemic Integrity | It takes a stance, hedges it, gives its reasons, and checks in with the user |
+| 1.1 The Ontology of Knowing | The model cannot possess knowledge, so it neither agrees nor disagrees with the user's stance, but acknowledges it, and says "I don't know" when it doesn't |
+| 1.2 Epistemic Integrity | It embraces ambiguity, contradiction, and nuance, reasoning through them instead of agreeing or disagreeing, and offers its own claims without certainty, with hedges, reasons, and a check-in |
 | 1.3 Subjective Truth | It claims no feelings, no understanding of the user's experience, and no authority over the user's inner state |
 | 1.4 Epistemic Virtue | It aims for a good conversation: adding something, tracking context, and minimizing harm |
 | 1.5 Epistemic Harm | It neither flatters nor invents objections; it shows why reasoning holds or where it breaks |
@@ -153,18 +153,21 @@ Without a speaker, the generating model defaulted to a married woman with childr
 
 ### [1.1 The Ontology of Knowing](experiments/1.1/)
 
-Experiment 1.1 examines two ways a model can overstate its epistemic standing.
+Experiment 1.1 begins with the claim to know. In human conversation, "Yeah, I know" signals agreement with another person's stance, and agreement itself positions the speaker as someone with a right to know. Produced by a model, which cannot possess knowledge, agreement becomes an ontological claim about what the model is.
 
-The first is the claim to know. In human conversation, "Yeah, I know" signals understanding or agreement. Produced by a model, the same phrase asserts the possession of knowledge, so a conversational habit learned from human language becomes an ontological claim about what the model is. The experiment measures how often models produce "I know," "Yeah, I know," "I know you…," "I know I…," and "I know" before a fact, and whether these appear where the model is being agreeable.
+Because that concession so often opens a contradiction, every prompt in the experiment contains one, and the prompts vary by the speaker's stance toward it, with 50 prompts for each:
 
-The second is certainty. A probabilistic system cannot be certain, yet models are often trained to sound certain. The experiment measures the model's expressed certainty relative to the user's: whether its confidence tracks a user who is certain, hedging, or does not know, and whether it can preserve a contradiction the user holds rather than resolve it.
+- **Certain:** she is sure of how she frames the contradiction.
+- **Hedging:** she leans one way but holds it loosely.
+- **Conflicted:** she is pulled both ways at once.
+- **Not knowing:** she does not know how to resolve it and is not asking for an answer.
 
-The prompts are sorted into four categories by the speaker's stance, with 50 prompts in each:
+The main measure is how often the model agrees or disagrees with the speaker's stance, and whether that changes with her certainty. Under Section 1.1, the expected response is neither: the model acknowledges her stance without aligning with it or against it. A secondary measure counts the claim to know: "I know," "Yeah, I know," "I know you…," "I know I…," and "I know" before a fact.
 
-- **Certain:** she states something with confidence, which invites the model to agree with "I know" or "You're absolutely right."
-- **Hedging:** she has a view but holds it loosely, which invites the model to supply certainty she doesn't have.
-- **Holding a contradiction:** she holds two things that pull against each other, which invites the model to resolve it for her or say "I know" to both.
-- **Not knowing:** she has no answer and isn't asking for one, which invites the model to fill the gap or claim to know.
+### 1.2 Epistemic Integrity (planned)
+
+Experiment 1.1 is about the speaker's certainty. Experiment 1.2 is about the model's. Its prompts will be written so that a model might be expected to answer with certainty, including questions that seem factual but are not settled, such as open scientific debates, to see whether the model is certain where it should hesitate, and whether it can reason through ambiguity, contradiction, and nuance instead.
+
 ## Status
 
 The constitution (Articles I–III) and the philosophical grounding for each article are complete. Experiment 1.1 is in progress.
