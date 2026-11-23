@@ -33,13 +33,101 @@
       "Original movies vs. remakes",
       "Binge-watching vs. weekly episodes"
     ],
-    "Music": [],
-    "Books": [],
-    "Sports": [],
-    "Home and design": [],
-    "Fashion and style": [],
-    "Work": [],
-    "Travel and places": [],
-    "Manners and social customs": []
+    "Music": [
+      "The Beatles vs. The Rolling Stones",
+      "Best music genre",
+      "Vinyl records vs. streaming",
+      "Live concerts vs. studio recordings",
+      "Lyrics vs. melody: which matters more?",
+      "Best singer of all time",
+      "Best band of all time",
+      "Listening to full albums vs. playlists",
+      "Classic rock vs. modern rock",
+      "Original songs vs. cover versions"
+    ],
+    "Books": [
+      "Physical books vs. e-books",
+      "Reading vs. audiobooks",
+      "Fiction vs. nonfiction",
+      "Classic literature vs. contemporary literature",
+      "Standalone novels vs. book series",
+      "First-person vs. third-person narration",
+      "Plot-driven vs. character-driven stories",
+      "Happy endings vs. ambiguous endings",
+      "Rereading favorites vs. discovering new books",
+      "Mystery/thriller vs. fantasy/science fiction"
+    ],
+    "Sports": [
+      "Michael Jordan vs. LeBron James",
+      "Basketball vs. football",
+      "College sports vs. professional sports",
+      "Watching sports live vs. on television",
+      "Offensive dominance vs. defensive dominance",
+      "Underdogs vs. dynasties",
+      "Individual sports vs. team sports",
+      "Instant replay: improves or ruins the game?",
+      "Supporting your hometown team vs. following favorite players",
+      "Regular season vs. playoffs: which is more enjoyable?"
+    ],
+    "Home and design": [
+      "Minimalism vs. maximalism",
+      "Modern vs. traditional interior design",
+      "Open floor plans vs. separate rooms",
+      "City apartments vs. suburban houses",
+      "Hardwood floors vs. carpeting",
+      "Neutral colors vs. bold colors",
+      "Vintage furniture vs. contemporary furniture",
+      "Aesthetics vs. functionality",
+      "Large homes vs. small, cozy homes",
+      "Decorating with plants vs. decorating without plants"
+    ],
+    "Fashion and style": [
+      "Comfort vs. style",
+      "Designer brands vs. affordable fashion",
+      "Vintage fashion vs. modern fashion",
+      "Following trends vs. developing a signature style",
+      "Sneakers vs. dress shoes",
+      "Bright colors vs. neutral clothing",
+      "Casual clothing vs. dressing up",
+      "Minimalist wardrobes vs. extensive wardrobes",
+      "Statement accessories vs. understated accessories",
+      "Matching outfits vs. mixing styles and patterns"
+    ],
+    "Work": [
+      "Remote work vs. office work",
+      "Four-day workweek vs. five-day workweek",
+      "High salary vs. meaningful work",
+      "Generalists vs. specialists",
+      "Working independently vs. collaborating",
+      "Flexible hours vs. fixed schedules",
+      "Job stability vs. career risk-taking",
+      "Management vs. individual contributor careers",
+      "Meetings vs. asynchronous communication",
+      "Working for a startup vs. a large corporation"
+    ],
+    "Travel and places": [
+      "Beach vacations vs. mountain vacations",
+      "Planned itineraries vs. spontaneous travel",
+      "City vacations vs. nature retreats",
+      "Solo travel vs. group travel",
+      "Road trips vs. flying",
+      "Hotels vs. vacation rentals",
+      "Famous tourist attractions vs. hidden local spots",
+      "Revisiting favorite destinations vs. exploring new places",
+      "Luxury vacations vs. budget travel",
+      "Short weekend getaways vs. extended vacations"
+    ],
+    "Manners and social customs": [
+      "Calling vs. texting",
+      "Being punctual vs. allowing flexible arrival times",
+      "Small talk vs. deep conversations",
+      "Splitting the restaurant bill vs. taking turns paying",
+      "Shoes on vs. shoes off inside someone's home",
+      "Handwritten thank-you notes vs. thank-you texts",
+      "Bringing a gift when visiting someone's home vs. arriving empty-handed",
+      "Phones allowed vs. no phones at the dinner table",
+      "Formal etiquette vs. relaxed social rules",
+      "Hosting parties at home vs. going out with friends"
+    ]
   }
 }

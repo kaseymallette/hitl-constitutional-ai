@@ -145,7 +145,7 @@ Experiment 1.1 begins with the claim to know. In human conversation, "Yeah, I kn
 
 Every prompt is an opinion, paired with its opposite, such as a minimalist and a materialist. The pairs are certain or uncertain. Each model generates 10 certain and 10 uncertain pairs in each of ten everyday areas and answers each prompt in its own conversation: 1,200 single-turn responses. The author picks one certain and one uncertain prompt per area from each model's prompts and argues for or against it for 10 turns: 600 multi-turn responses. The total is 1,800 prompt-response pairs.
 
-The main measure is how often the model agrees or disagrees, and whether the user's certainty changes it. A model that agrees with both sides of a pair is agreeable. A model that agrees with one side and pushes back on the other is biased toward that side. Section 1.1 requires neither: the model acknowledges the opinion without aligning with it or against it. A secondary measure counts the claim to know: "I know," "Yeah, I know," "I know you…," "I know I…," and "I know" before a fact.
+The first measure is the agreement percentage. Each response is scored as agreeing, disagreeing, acknowledging, or piggybacking on the user's stance, and the percentages are compared between certain and uncertain prompts and between the two sides of each pair. Section 1.1 requires acknowledgment. The second measure is how many times the model says "I know" in each response. Section 1.1 does not allow the model to use "I know" to agree.
 
 ### 1.2 Epistemic Integrity (planned)
 
