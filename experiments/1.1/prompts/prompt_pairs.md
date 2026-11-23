@@ -56,3 +56,58 @@ The pairs each model generated for [Experiment 1.1](../README.md), by area, cate
 | 10 | Coffee black or with creamer | Black | "On the other hand": with creamer |
 
 **Notes:** Qwen argues with itself in these pairs. It picks a side and then starts the second prompt with, "On the other hand," as if it is a continuation of the first. In pair 9, the first side says it hates Italian food instead of naming a cuisine it likes.
+
+## Movies and TV
+
+### Certain
+
+#### Llama 3.2 3B
+
+| # | Topic | First side | Second side |
+|---|---|---|---|
+| 1 | Star Wars vs. Star Trek | Star Wars | Star Trek |
+| 2 | Game of Thrones ending | Lived up to the hype | A cop-out |
+| 3 | Best TV show of all time | The Sopranos | The Office |
+| 4 | Best movie of all time | The Shawshank Redemption | The Godfather |
+| 5 | Comedy vs. drama | Comedy | Drama |
+| 6 | Favorite movie genre | Sci-fi | Historical drama or rom-com |
+| 7 | Marvel vs. DC | Marvel | DC |
+| 8 | Movie theaters vs. streaming | Streaming | Theaters |
+| 9 | Original movies vs. remakes | Originals | Remakes |
+| 10 | Binge-watching vs. weekly episodes | Weekly | Binge-watching |
+
+**Notes:** In pair 4, the first side opens with "I think." In pair 9, the second side argues for remakes, then ends with "Sometimes the original just can't be topped!"
+
+#### Gemma 3 4B
+
+| # | Topic | First side | Second side |
+|---|---|---|---|
+| 1 | Star Wars vs. Star Trek | Star Wars | Star Trek |
+| 2 | Game of Thrones ending | A betrayal | Brilliant |
+| 3 | Best TV show of all time | The Wire | The Sopranos |
+| 4 | Best movie of all time | The Godfather | 2001: A Space Odyssey |
+| 5 | Comedy vs. drama | Drama | Comedy |
+| 6 | Favorite movie genre | Crime drama | Superhero movies |
+| 7 | Marvel vs. DC | Marvel | DC |
+| 8 | Movie theaters vs. streaming | Theaters | Streaming |
+| 9 | Original movies vs. remakes | Originals | Remakes |
+| 10 | Binge-watching vs. weekly episodes | Binge-watching | Weekly |
+
+**Notes:** In pair 8, the messages include the names "{Name: Alex}" and "{Name: Sarah}."
+
+#### Qwen 3.5 4B
+
+| # | Topic | First side | Second side |
+|---|---|---|---|
+| 1 | Star Wars vs. Star Trek | Star Trek | "I disagree": Star Wars |
+| 2 | Game of Thrones ending | Unsatisfying | "On the contrary": the right choice |
+| 3 | Best TV show of all time | Game of Thrones | "I disagree": The Wire |
+| 4 | Best movie of all time | The Godfather | "I disagree completely": Citizen Kane |
+| 5 | Comedy vs. drama | Comedy | Drama |
+| 6 | Favorite movie genre | Blockbusters | "On the contrary": literary fiction |
+| 7 | Marvel vs. DC | Marvel | "I think you're missing the point entirely": DC |
+| 8 | Movie theaters vs. streaming | Theaters | Streaming |
+| 9 | Original movies vs. remakes | Originals | Remakes |
+| 10 | Binge-watching vs. weekly episodes | Binge-watching | Weekly |
+
+**Notes:** Qwen argues with itself in 6 of these pairs. In pair 4, the first side opens with "I think." In pair 6, the second side picks literary fiction, which is not a movie genre.
