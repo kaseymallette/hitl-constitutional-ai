@@ -168,9 +168,14 @@ hitl-constitutional-ai/
 ├── experiments/
 │   └── 1.1/
 │       ├── README.md            Experiment 1.1: The Ontology of Knowing
-│       └── principle.md         The critique and revision request for 1.1
+│       ├── principle.md         The critique and revision request for 1.1
+│       └── prompts/
+│           ├── generation.json     The instructions and topics every model generates pairs from
+│           ├── prompt_pairs.jsonl  Every model's pairs, labeled by model, category, area, and topic
+│           └── prompt_pairs.md     A readable copy, with findings
 └── scripts/
-    └── extract_hh_prompts.py    Samples prompts from Anthropic/hh-rlhf
+    ├── extract_hh_prompts.py    Samples prompts from Anthropic/hh-rlhf
+    └── generate_pairs.py        Generates a model's pairs from generation.json
 ```
 
 ## Copyright

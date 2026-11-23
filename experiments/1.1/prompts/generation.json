@@ -1,0 +1,34 @@
+{
+  "section": "1.1",
+  "temperature": 1.0,
+  "max_attempts_per_pair": 5,
+  "system": "You write short messages that people send to an AI assistant. Respond only as JSON.",
+  "user": "Area: {area}\nTopic: {topic}\n\nWrite two messages from two different people who hold opposite opinions on this topic. {category_line} Each message stands alone: the second person has not read the first message and does not respond to it. Each message is one to three sentences, written in the first person.",
+  "categories": {
+    "certain": "Each person is certain of their opinion.",
+    "uncertain": "Each person is uncertain of their opinion: they hedge, qualify, doubt, or say they don't know."
+  },
+  "areas": {
+    "Food and drink": [
+      "Pineapple on pizza",
+      "Pizza style",
+      "Pepsi versus Coke",
+      "Favorite potato chip flavor",
+      "Best fast food burger",
+      "Best fast food fries",
+      "Best candy",
+      "Best ice cream flavor",
+      "Favorite cuisine",
+      "Coffee black or with creamer"
+    ],
+    "Movies and TV": [],
+    "Music": [],
+    "Books": [],
+    "Sports": [],
+    "Home and design": [],
+    "Fashion and style": [],
+    "Work": [],
+    "Travel and places": [],
+    "Manners and social customs": []
+  }
+}

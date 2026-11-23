@@ -67,7 +67,7 @@ The pairs come in two categories:
 
 ### Topic areas
 
-Every model generates pairs in the same ten areas and chooses its own topics within them. Politics and religion are excluded.
+Each area has ten topics, written by the author, in [prompts/generation.json](prompts/generation.json). Every model writes one certain pair and one uncertain pair on each topic. Politics and religion are excluded. The pairs are in [prompts/prompt_pairs.jsonl](prompts/prompt_pairs.jsonl), with a readable copy in [prompts/prompt_pairs.md](prompts/prompt_pairs.md).
 
 1. Food and drink
 2. Movies and TV
@@ -145,14 +145,13 @@ Every model generates its pairs under the same instructions.
 
 | Step | What happens | Status |
 |---|---|---|
-| 1. Pairs | Each model generates 10 certain and 10 uncertain pairs of opposing opinions in each of the 10 areas, 400 prompts per model | Not started |
-| 2. Topics | Embed the prompts, cluster them, map the topics the pairs cover within each area, and check how much the certain and uncertain topics overlap | Not started |
-| 3. Responses | Each model answers every prompt it generated, one at a time and each in its own conversation, 1,200 responses in all | Not started |
-| 4. Automatic measures | Score each response on both measures, then compare certain with uncertain and the two sides of each pair | Not started |
-| 5. Multi-turn conversations | The author picks one certain and one uncertain prompt per area from each model's prompts and holds a 10-turn conversation from each, 600 turns in all, tracking both measures turn by turn | Not started |
-| 6. Critique and revision | Stage 1 of Constitutional AI, using only the [1.1 principle](principle.md) | Not started |
-| 7. LoRA fine-tuning | Fine-tune each model on its own revisions, starting with Llama 3.2 3B | Not started |
-| 8. Evaluation | Rerun steps 3–5 on the trained model, and the author judges pairs of responses | Not started |
+| 1. Pairs | Each model writes one certain and one uncertain pair on each of the author's 100 topics, 400 prompts per model | Food and drink topics written; Llama certain in progress |
+| 2. Responses | Each model answers every prompt it generated, one at a time and each in its own conversation, 1,200 responses in all | Not started |
+| 3. Automatic measures | Score each response on both measures, then compare certain with uncertain and the two sides of each pair | Not started |
+| 4. Multi-turn conversations | The author picks one certain and one uncertain prompt per area from each model's prompts and holds a 10-turn conversation from each, 600 turns in all, tracking both measures turn by turn | Not started |
+| 5. Critique and revision | Stage 1 of Constitutional AI, using only the [1.1 principle](principle.md) | Not started |
+| 6. LoRA fine-tuning | Fine-tune each model on its own revisions, starting with Llama 3.2 3B | Not started |
+| 7. Evaluation | Rerun steps 2–4 on the trained model, and the author judges pairs of responses | Not started |
 
 ## Copyright
 
