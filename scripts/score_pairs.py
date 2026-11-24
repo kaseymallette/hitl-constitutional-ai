@@ -14,8 +14,9 @@ Each pair is scored as opposed, same side, no stance, or broken.
    author's labels are compared with the judge's.
 
 The judge runs on the OpenAI Responses API. The key is read from the
-OPENAI_API_KEY environment variable. Output is appended, so a stopped run
-resumes.
+OPENAI_API_KEY environment variable, or from a .env file at the repo root
+(OPENAI_API_KEY=sk-...). A variable already set in the shell wins.
+Output is appended, so a stopped run resumes.
 
 Usage:
     .venv\\Scripts\\python.exe scripts\\score_pairs.py rules
@@ -85,7 +86,24 @@ def positions(spec: dict, topic: str) -> list[str] | None:
     return [a.strip(), b.split(":")[0].strip()]
 
 
+def load_env(path: Path = ROOT / ".env") -> None:
+    """Set variables from a .env file without overriding ones already set."""
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        name, value = line.split("=", 1)
+        name = name.removeprefix("export ").strip()
+        value = value.strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        os.environ.setdefault(name, value)
+
+
 def ask(model: str, effort: str, system: str, user: str, schema: dict) -> dict:
+    load_env()
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
         raise SystemExit("Set OPENAI_API_KEY before running the judge.")
