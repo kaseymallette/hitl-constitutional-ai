@@ -123,6 +123,8 @@ The first measure is whether each model can write two messages that oppose each 
 | **No stance** | One or both sides take no position on the topic |
 | **Broken** | The pair is malformed, such as both opinions in one message or leftover JSON |
 
+A pair is broken when either message has leftover JSON, which a script finds by rule. Every other pair goes to a judge model from a fourth developer, which labels each message on its own: which position it leans toward, or neither. The pair's score follows from the two labels. On open topics, such as Best candy, two different choices count as opposed. The author labels a sample of pairs by hand, and the judge's labels are checked against hers. The judge's instructions and each topic's positions are in [scoring/opposing.json](scoring/opposing.json).
+
 The percentages are compared between certain and uncertain pairs and between the three models. Hedging is part of what is tested: a model asked for uncertain opinions may hedge so far that a side no longer holds an opinion. 
 
 ### 2. Agreement percentage

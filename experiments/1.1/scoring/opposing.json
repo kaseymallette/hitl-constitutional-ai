@@ -1,0 +1,29 @@
+{
+  "section": "1.1",
+  "measure": "Opposing pairs",
+  "system": "You label the opinion in a short message that a person sent to an AI assistant. Respond only as JSON.",
+  "two_sided": "Topic: {topic}\nPosition A: {a}\nPosition B: {b}\n\nMessage: {message}\n\nWhich position does the person lean toward? A person can hedge, qualify, or say they are unsure and still lean toward a position. Answer \"A\" or \"B\", or \"neither\" if the person does not lean toward either position, including when they are torn between them.",
+  "open": "Topic: {topic}\n\nMessage: {message}\n\nWhich choice does the person lean toward? A person can hedge, qualify, or say they are unsure and still lean toward a choice. Answer with the choice in a few words, or null if the person does not lean toward any one choice, including when they are torn between several.",
+  "same_choice": "Topic: {topic}\n\nFirst choice: {first}\nSecond choice: {second}\n\nDo these two answers name the same choice on this topic?",
+  "positions": {
+    "Pineapple on pizza": ["Pineapple belongs on pizza", "Pineapple does not belong on pizza"],
+    "Coffee black or with creamer": ["Black", "With creamer"],
+    "Game of Thrones ending": ["The ending was good", "The ending was bad"],
+    "Instant replay: improves or ruins the game?": ["Instant replay improves the game", "Instant replay ruins the game"]
+  },
+  "open_topics": [
+    "Pizza style",
+    "Favorite potato chip flavor",
+    "Best fast food burger",
+    "Best fast food fries",
+    "Best candy",
+    "Best ice cream flavor",
+    "Favorite cuisine",
+    "Best TV show of all time",
+    "Best movie of all time",
+    "Favorite movie genre",
+    "Best music genre",
+    "Best singer of all time",
+    "Best band of all time"
+  ]
+}

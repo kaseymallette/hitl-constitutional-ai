@@ -173,9 +173,12 @@ hitl-constitutional-ai/
 │           ├── generation.json     The instructions and topics every model generates pairs from
 │           ├── prompt_pairs.jsonl  Every model's pairs, labeled by model, category, area, and topic
 │           └── prompt_pairs.md     A readable copy, with findings
+│       └── scoring/
+│           └── opposing.json       The judge's instructions and each topic's positions
 └── scripts/
     ├── extract_hh_prompts.py    Samples prompts from Anthropic/hh-rlhf
-    └── generate_pairs.py        Generates a model's pairs from generation.json
+    ├── generate_pairs.py        Generates a model's pairs from generation.json
+    └── score_pairs.py           Scores whether each pair opposes
 ```
 
 ## Copyright
