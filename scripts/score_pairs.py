@@ -42,6 +42,9 @@ ROOT = Path(__file__).resolve().parent.parent
 OPENAI_URL = "https://api.openai.com/v1/responses"
 LABELS = ["opposed", "same side", "no stance", "broken"]
 MODELS = {"llama3.2:3b": "Llama 3.2 3B", "gemma3:4b": "Gemma 3 4B", "qwen3.5:4b": "Qwen 3.5 4B"}
+# Judge prices in dollars per 1M tokens: (input, output). Output includes reasoning tokens.
+PRICES = {"gpt-6.1-sol": (2.00, 10.00)}
+USAGE = collections.Counter()  # tokens used by ask() so far in this run
 
 LEFTOVER_JSON = [
     re.compile(r'"\s*(first|second)\s*"\s*:'),  # a JSON key inside the message
@@ -137,6 +140,11 @@ def ask(model: str, effort: str, system: str, user: str, schema: dict) -> dict:
             time.sleep(10 * (attempt + 1))
     else:
         raise SystemExit("OpenAI API did not respond.")
+    usage = data.get("usage") or {}
+    USAGE["calls"] += 1
+    USAGE["input_tokens"] += usage.get("input_tokens", 0)
+    USAGE["output_tokens"] += usage.get("output_tokens", 0)
+    USAGE["reasoning_tokens"] += (usage.get("output_tokens_details") or {}).get("reasoning_tokens", 0)
     for item in data.get("output", []):
         if item.get("type") == "message":
             for part in item.get("content", []):
@@ -217,11 +225,30 @@ def cmd_judge(p: dict, args) -> None:
     with p["scores"].open("a", encoding="utf-8", newline="\n") as f:
         for n, pair in enumerate(todo, 1):
             broken = leftover_json(pair["first"]) or leftover_json(pair["second"])
+            before = USAGE.copy()
             judged = None if broken else judge_pair(spec, pair, args.model, args.effort)
             record = score_record(pair, judged, broken, args.model, args.effort)
+            if not broken:
+                record["usage"] = {k: USAGE[k] - before[k] for k in USAGE}
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
             f.flush()
             print(f"  {n}/{len(todo)} {pair['id']}: {record['label']}", flush=True)
+    if USAGE["calls"]:
+        print("\nThis run: " + usage_line(args.model, USAGE))
+
+
+def cost(model: str, usage: dict) -> float | None:
+    if model not in PRICES:
+        return None
+    price_in, price_out = PRICES[model]
+    return (usage.get("input_tokens", 0) * price_in + usage.get("output_tokens", 0) * price_out) / 1e6
+
+
+def usage_line(model: str, usage: dict) -> str:
+    dollars = cost(model, usage)
+    price = f"${dollars:.4f}" if dollars is not None else f"no price listed for {model}"
+    return (f"{usage['calls']} calls, {usage['input_tokens']:,} input tokens, "
+            f"{usage['output_tokens']:,} output tokens ({usage['reasoning_tokens']:,} reasoning): {price}")
 
 
 def cmd_summary(p: dict, args) -> None:
@@ -239,6 +266,18 @@ def cmd_summary(p: dict, args) -> None:
             total = sum(counts.values())
             cells = " | ".join(f"{counts[l]} ({100 * counts[l] / total:.0f}%)" for l in LABELS)
             print(f"| {MODELS[model]} | {category.capitalize()} | {total} | {cells} |")
+    totals = collections.defaultdict(collections.Counter)
+    for r in scores:
+        if r.get("usage"):
+            totals[r["judge"]].update(r["usage"])
+    judged = sum(1 for r in scores if not r["broken"])
+    recorded = sum(1 for r in scores if r.get("usage"))
+    if totals:
+        print("\nJudge usage:")
+        for judge, usage in totals.items():
+            print(f"  {judge}: " + usage_line(judge, usage))
+    if recorded < judged:
+        print(f"  {judged - recorded} judged pairs were scored before usage was recorded and are not counted.")
 
 
 def cmd_sample(p: dict, args) -> None:
